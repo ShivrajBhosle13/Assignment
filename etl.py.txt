@@ -1,0 +1,16 @@
+import requests
+
+def fetch_data():
+    url = "http://localhost:8000/v1/market-data"
+    response = requests.get(url)
+    return response.json()
+
+def calculate_vwap(data):
+    total = sum(d["price"] * d["volume"] for d in data)
+    volume = sum(d["volume"] for d in data)
+    return total / volume
+
+if __name__ == "__main__":
+    data = fetch_data()
+    print("Data:", data)
+    print("VWAP:", calculate_vwap(data))
